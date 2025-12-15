@@ -4,6 +4,6 @@
 ../Core/Src/stm32h7xx_hal_msp.c:169:6:HAL_I2S_MspInit	5
 ../Core/Src/stm32h7xx_hal_msp.c:281:6:HAL_I2S_MspDeInit	2
 ../Core/Src/stm32h7xx_hal_msp.c:320:6:HAL_QSPI_MspInit	3
-../Core/Src/stm32h7xx_hal_msp.c:403:6:HAL_QSPI_MspDeInit	2
-../Core/Src/stm32h7xx_hal_msp.c:442:6:HAL_PCD_MspInit	5
-../Core/Src/stm32h7xx_hal_msp.c:557:6:HAL_PCD_MspDeInit	3
+../Core/Src/stm32h7xx_hal_msp.c:411:6:HAL_QSPI_MspDeInit	2
+../Core/Src/stm32h7xx_hal_msp.c:452:6:HAL_PCD_MspInit	3
+../Core/Src/stm32h7xx_hal_msp.c:531:6:HAL_PCD_MspDeInit	2
