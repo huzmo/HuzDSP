@@ -57,12 +57,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Encoder_SW_Pin GPIO_PIN_6
-#define Encoder_SW_GPIO_Port GPIOA
-#define Encoder_Data_Pin GPIO_PIN_7
-#define Encoder_Data_GPIO_Port GPIOA
-#define Encoder_CLK_Pin GPIO_PIN_4
-#define Encoder_CLK_GPIO_Port GPIOC
+#define Encoder_SW_Pin GPIO_PIN_4
+#define Encoder_SW_GPIO_Port GPIOC
+#define Encoder_SW_EXTI_IRQn EXTI4_IRQn
 #define LED_Pin GPIO_PIN_14
 #define LED_GPIO_Port GPIOE
 #define USB_SW_Pin GPIO_PIN_10

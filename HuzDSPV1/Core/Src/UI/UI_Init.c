@@ -5,3 +5,8 @@
  *      Author: Huzaifa
  */
 
+#include "UI/UI_Init.h"
+
+void UI_Init(void){
+	UI_state_t UI_state = {0};
+}

@@ -1,0 +1,47 @@
+/*
+ * UI_Init.h
+ *
+ *  Created on: Dec 15, 2025
+ *      Author: Huzaifa
+ */
+
+#ifndef __UI_INIT_H
+#define __UI_INIT_H
+
+void UI_Init(void);
+
+
+// --------- Struct to handle user input event ---------
+typedef enum
+{
+    UI_EVENT_ENCODER,
+    UI_EVENT_SWITCH
+} UI_eventType_t;
+
+typedef enum
+{
+    ENC_CCW = -1,
+    ENC_CW  = +1
+} encoder_dir_t;
+
+typedef struct
+{
+	UI_eventType_t type;
+    encoder_dir_t   dir;   // don't care if switch
+} UI_event_t;
+
+
+typedef struct
+{
+    int32_t cnt_prev; // stores the old encoder value
+    int32_t cnt_curr; // stores the current encoder value
+    int32_t delta;    // stores the difference between encoder values
+
+    uint8_t button_state;
+    uint32_t button_last_change;
+
+    uint8_t active_page;
+    uint8_t selected_param;
+} UI_state_t;
+
+#endif

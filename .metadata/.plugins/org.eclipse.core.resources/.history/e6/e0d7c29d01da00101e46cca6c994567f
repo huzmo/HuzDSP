@@ -1,0 +1,32 @@
+/*
+ * UI_Init.h
+ *
+ *  Created on: Dec 15, 2025
+ *      Author: Huzaifa
+ */
+
+#ifndef __UI_INIT_H
+#define __UI_INIT_H
+
+void UI_Init(void);
+
+typedef enum
+{
+    UI_EVENT_ENCODER,
+    UI_EVENT_SWITCH
+} UI_event_t;
+
+typedef enum
+{
+    ENC_CCW = -1,
+    ENC_CW  = +1
+} encoder_dir_t;
+
+typedef struct
+{
+	ui_event_type_t type;
+    encoder_dir_t   dir;   // only valid if type == ENCODER
+} UI_event_t;
+
+
+#endif

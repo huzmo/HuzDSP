@@ -5,5 +5,7 @@
 ../Core/Src/stm32h7xx_hal_msp.c:281:6:HAL_I2S_MspDeInit	16	static
 ../Core/Src/stm32h7xx_hal_msp.c:320:6:HAL_QSPI_MspInit	256	static
 ../Core/Src/stm32h7xx_hal_msp.c:411:6:HAL_QSPI_MspDeInit	16	static
-../Core/Src/stm32h7xx_hal_msp.c:452:6:HAL_PCD_MspInit	256	static
-../Core/Src/stm32h7xx_hal_msp.c:531:6:HAL_PCD_MspDeInit	16	static
+../Core/Src/stm32h7xx_hal_msp.c:452:6:HAL_TIM_Encoder_MspInit	48	static
+../Core/Src/stm32h7xx_hal_msp.c:492:6:HAL_TIM_Encoder_MspDeInit	16	static
+../Core/Src/stm32h7xx_hal_msp.c:523:6:HAL_PCD_MspInit	256	static
+../Core/Src/stm32h7xx_hal_msp.c:602:6:HAL_PCD_MspDeInit	16	static
