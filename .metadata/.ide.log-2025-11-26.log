@@ -1,0 +1,70 @@
+2025-11-27 00:04:00,246 [INFO] I2sManager:658 - 1.3312E7
+2025-11-27 00:04:00,263 [INFO] I2sManager:195 - I2S Clock Value : 1.3312E7
+2025-11-27 00:04:00,263 [INFO] I2sManager:553 - AudioClock : 7428Divider : 3Odd : 1
+2025-11-27 00:04:01,989 [INFO] I2sManager:658 - 1.3312E7
+2025-11-27 00:04:01,989 [INFO] I2sManager:195 - I2S Clock Value : 1.3312E7
+2025-11-27 00:04:01,989 [INFO] I2sManager:553 - AudioClock : 7428Divider : 3Odd : 1
+2025-11-27 00:04:35,526 [INFO] ApiDbMcu:508 - Load IP Config File for USB_DEVICE
+2025-11-27 00:04:35,651 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,652 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,652 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,652 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,652 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,652 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,671 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,671 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:35,671 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:59,148 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:59,148 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:59,148 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:59,154 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:59,154 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:04:59,154 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,136 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,136 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,136 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,136 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,137 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,137 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,162 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,162 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:03,162 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:06,081 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:06,081 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:06,081 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:12,138 [WARN] IP:2191 - DEVICE_SERIAL0_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:12,138 [WARN] IP:2191 - DEVICE_SERIAL1_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:12,138 [WARN] IP:2191 - DEVICE_SERIAL2_AUDIO_HS not found: check if there is a RefParameter without a condition.
+2025-11-27 00:05:20,696 [INFO] RtosManager:919 - Current active RTOS is FREERTOS [Cortex-M7NS]
+2025-11-27 00:05:20,891 [INFO] ApiDbMcu:508 - Load IP Config File for FREERTOS
+2025-11-27 00:05:21,256 [ERROR] RtosPanel:558 - Can not restore the selected Tab for FREERTOS(A reason can be that the tab is no more available.)
+2025-11-27 00:05:21,296 [ERROR] RtosPanel:558 - Can not restore the selected Tab for FREERTOS(A reason can be that the tab is no more available.)
+2025-11-27 00:05:37,951 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-11-27 00:05:37,951 [WARN] TasksAndQueuesTab:763 - 128 128
+2025-11-27 00:05:37,951 [WARN] TasksAndQueuesTab:775 - max value is: 3840.0
+2025-11-27 00:05:46,422 [ERROR] RtosPanel:558 - Can not restore the selected Tab for FREERTOS(A reason can be that the tab is no more available.)
+2025-11-27 00:06:06,228 [INFO] I2sManager:658 - 1.3312E7
+2025-11-27 00:06:06,228 [INFO] I2sManager:195 - I2S Clock Value : 1.3312E7
+2025-11-27 00:06:06,228 [INFO] I2sManager:553 - AudioClock : 7428Divider : 3Odd : 1
+2025-11-27 00:06:10,208 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:10,228 [INFO] I2sManager:553 - AudioClock : 7428Divider : 3Odd : 1
+2025-11-27 00:06:15,744 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:15,763 [INFO] I2sManager:658 - 1.3312E7
+2025-11-27 00:06:15,763 [INFO] I2sManager:195 - I2S Clock Value : 1.3312E7
+2025-11-27 00:06:15,765 [INFO] I2sManager:553 - AudioClock : 52000Divider : 0Odd : 1
+2025-11-27 00:06:15,815 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:34,687 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:37,150 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:39,683 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:41,000 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:46,288 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:47,577 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:49,662 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:06:59,519 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:05,763 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:11,078 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:15,847 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:16,329 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:17,141 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:21,486 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-11-27 00:07:31,680 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 844188088 Bytes (1073741824)
