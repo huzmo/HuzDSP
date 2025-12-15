@@ -55,6 +55,36 @@ Discarded input sections
  .ARM.exidx     0x00000000       0x10 C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
  .ARM.attributes
                 0x00000000       0x1e C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+ .group         0x00000000        0xc ./Core/Src/DSP/DSP_Init.o
+ .text          0x00000000        0x0 ./Core/Src/DSP/DSP_Init.o
+ .data          0x00000000        0x0 ./Core/Src/DSP/DSP_Init.o
+ .bss           0x00000000        0x0 ./Core/Src/DSP/DSP_Init.o
+ .debug_info    0x00000000       0x22 ./Core/Src/DSP/DSP_Init.o
+ .debug_abbrev  0x00000000       0x12 ./Core/Src/DSP/DSP_Init.o
+ .debug_aranges
+                0x00000000       0x18 ./Core/Src/DSP/DSP_Init.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/DSP/DSP_Init.o
+ .debug_macro   0x00000000      0xacc ./Core/Src/DSP/DSP_Init.o
+ .debug_line    0x00000000       0x3b ./Core/Src/DSP/DSP_Init.o
+ .debug_str     0x00000000     0x2e42 ./Core/Src/DSP/DSP_Init.o
+ .comment       0x00000000       0x44 ./Core/Src/DSP/DSP_Init.o
+ .ARM.attributes
+                0x00000000       0x32 ./Core/Src/DSP/DSP_Init.o
+ .group         0x00000000        0xc ./Core/Src/UI/UI_Init.o
+ .text          0x00000000        0x0 ./Core/Src/UI/UI_Init.o
+ .data          0x00000000        0x0 ./Core/Src/UI/UI_Init.o
+ .bss           0x00000000        0x0 ./Core/Src/UI/UI_Init.o
+ .debug_info    0x00000000       0x22 ./Core/Src/UI/UI_Init.o
+ .debug_abbrev  0x00000000       0x12 ./Core/Src/UI/UI_Init.o
+ .debug_aranges
+                0x00000000       0x18 ./Core/Src/UI/UI_Init.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/UI/UI_Init.o
+ .debug_macro   0x00000000      0xacc ./Core/Src/UI/UI_Init.o
+ .debug_line    0x00000000       0x39 ./Core/Src/UI/UI_Init.o
+ .debug_str     0x00000000     0x2e40 ./Core/Src/UI/UI_Init.o
+ .comment       0x00000000       0x44 ./Core/Src/UI/UI_Init.o
+ .ARM.attributes
+                0x00000000       0x32 ./Core/Src/UI/UI_Init.o
  .group         0x00000000        0xc ./Core/Src/freertos.o
  .group         0x00000000        0xc ./Core/Src/freertos.o
  .group         0x00000000        0xc ./Core/Src/freertos.o
@@ -133,6 +163,7 @@ Discarded input sections
  .text          0x00000000        0x0 ./Core/Src/freertos.o
  .data          0x00000000        0x0 ./Core/Src/freertos.o
  .bss           0x00000000        0x0 ./Core/Src/freertos.o
+ .debug_macro   0x00000000      0xacc ./Core/Src/freertos.o
  .group         0x00000000        0xc ./Core/Src/main.o
  .group         0x00000000        0xc ./Core/Src/main.o
  .group         0x00000000        0xc ./Core/Src/main.o
@@ -6766,6 +6797,8 @@ Linker script and memory map
 LOAD C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7e-m+dp/hard/crti.o
 LOAD C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 LOAD C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+LOAD ./Core/Src/DSP/DSP_Init.o
+LOAD ./Core/Src/UI/UI_Init.o
 LOAD ./Core/Src/freertos.o
 LOAD ./Core/Src/main.o
 LOAD ./Core/Src/stm32h7xx_hal_msp.o
@@ -7913,120 +7946,119 @@ LOAD C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_rnglists
                 0x000014df       0x42 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
-.debug_macro    0x00000000    0x3a39f
+.debug_macro    0x00000000    0x398d3
  .debug_macro   0x00000000      0x35b ./Core/Src/freertos.o
- .debug_macro   0x0000035b      0xacc ./Core/Src/freertos.o
- .debug_macro   0x00000e27      0x189 ./Core/Src/freertos.o
- .debug_macro   0x00000fb0       0x22 ./Core/Src/freertos.o
- .debug_macro   0x00000fd2       0x8e ./Core/Src/freertos.o
- .debug_macro   0x00001060       0x51 ./Core/Src/freertos.o
- .debug_macro   0x000010b1      0x103 ./Core/Src/freertos.o
- .debug_macro   0x000011b4       0x6a ./Core/Src/freertos.o
- .debug_macro   0x0000121e      0x1df ./Core/Src/freertos.o
- .debug_macro   0x000013fd       0xf1 ./Core/Src/freertos.o
- .debug_macro   0x000014ee      0x15a ./Core/Src/freertos.o
- .debug_macro   0x00001648       0xde ./Core/Src/freertos.o
- .debug_macro   0x00001726       0x1c ./Core/Src/freertos.o
- .debug_macro   0x00001742       0x26 ./Core/Src/freertos.o
- .debug_macro   0x00001768       0x61 ./Core/Src/freertos.o
- .debug_macro   0x000017c9       0x29 ./Core/Src/freertos.o
- .debug_macro   0x000017f2       0x43 ./Core/Src/freertos.o
- .debug_macro   0x00001835       0x34 ./Core/Src/freertos.o
- .debug_macro   0x00001869       0x16 ./Core/Src/freertos.o
- .debug_macro   0x0000187f       0x43 ./Core/Src/freertos.o
- .debug_macro   0x000018c2       0x34 ./Core/Src/freertos.o
- .debug_macro   0x000018f6       0x10 ./Core/Src/freertos.o
- .debug_macro   0x00001906       0x58 ./Core/Src/freertos.o
- .debug_macro   0x0000195e       0x8e ./Core/Src/freertos.o
- .debug_macro   0x000019ec       0x1c ./Core/Src/freertos.o
- .debug_macro   0x00001a08      0x177 ./Core/Src/freertos.o
- .debug_macro   0x00001b7f       0x10 ./Core/Src/freertos.o
- .debug_macro   0x00001b8f       0x35 ./Core/Src/freertos.o
- .debug_macro   0x00001bc4      0x4fe ./Core/Src/freertos.o
- .debug_macro   0x000020c2       0xb5 ./Core/Src/freertos.o
- .debug_macro   0x00002177       0xaa ./Core/Src/freertos.o
- .debug_macro   0x00002221      0x244 ./Core/Src/freertos.o
- .debug_macro   0x00002465       0x2e ./Core/Src/freertos.o
- .debug_macro   0x00002493       0x3b ./Core/Src/freertos.o
- .debug_macro   0x000024ce       0x1c ./Core/Src/freertos.o
- .debug_macro   0x000024ea       0x22 ./Core/Src/freertos.o
- .debug_macro   0x0000250c       0xfb ./Core/Src/freertos.o
- .debug_macro   0x00002607     0x1305 ./Core/Src/freertos.o
- .debug_macro   0x0000390c      0x11f ./Core/Src/freertos.o
- .debug_macro   0x00003a2b       0x27 ./Core/Src/freertos.o
- .debug_macro   0x00003a52    0x25eee ./Core/Src/freertos.o
- .debug_macro   0x00029940       0x6d ./Core/Src/freertos.o
- .debug_macro   0x000299ad     0x3d79 ./Core/Src/freertos.o
- .debug_macro   0x0002d726      0x369 ./Core/Src/freertos.o
- .debug_macro   0x0002da8f      0x19b ./Core/Src/freertos.o
- .debug_macro   0x0002dc2a       0x5d ./Core/Src/freertos.o
- .debug_macro   0x0002dc87     0x240e ./Core/Src/freertos.o
- .debug_macro   0x00030095     0x102c ./Core/Src/freertos.o
- .debug_macro   0x000310c1      0x154 ./Core/Src/freertos.o
- .debug_macro   0x00031215      0x114 ./Core/Src/freertos.o
- .debug_macro   0x00031329      0x3b6 ./Core/Src/freertos.o
- .debug_macro   0x000316df       0xac ./Core/Src/freertos.o
- .debug_macro   0x0003178b      0x72d ./Core/Src/freertos.o
- .debug_macro   0x00031eb8      0x228 ./Core/Src/freertos.o
- .debug_macro   0x000320e0       0x66 ./Core/Src/freertos.o
- .debug_macro   0x00032146      0x3bb ./Core/Src/freertos.o
- .debug_macro   0x00032501      0x3e4 ./Core/Src/freertos.o
- .debug_macro   0x000328e5      0x275 ./Core/Src/freertos.o
- .debug_macro   0x00032b5a      0x3ca ./Core/Src/freertos.o
- .debug_macro   0x00032f24      0x3de ./Core/Src/freertos.o
- .debug_macro   0x00033302       0x3c ./Core/Src/freertos.o
- .debug_macro   0x0003333e       0x4a ./Core/Src/freertos.o
- .debug_macro   0x00033388      0x22c ./Core/Src/freertos.o
- .debug_macro   0x000335b4       0x67 ./Core/Src/freertos.o
- .debug_macro   0x0003361b       0xa5 ./Core/Src/freertos.o
- .debug_macro   0x000336c0      0x25d ./Core/Src/freertos.o
- .debug_macro   0x0003391d      0x1c4 ./Core/Src/freertos.o
- .debug_macro   0x00033ae1      0x25e ./Core/Src/freertos.o
- .debug_macro   0x00033d3f       0x35 ./Core/Src/freertos.o
- .debug_macro   0x00033d74      0x2d4 ./Core/Src/freertos.o
- .debug_macro   0x00034048      0xafa ./Core/Src/freertos.o
- .debug_macro   0x00034b42      0x29f ./Core/Src/freertos.o
- .debug_macro   0x00034de1      0x293 ./Core/Src/freertos.o
- .debug_macro   0x00035074       0x90 ./Core/Src/freertos.o
- .debug_macro   0x00035104      0x5a0 ./Core/Src/freertos.o
- .debug_macro   0x000356a4       0x40 ./Core/Src/freertos.o
- .debug_macro   0x000356e4      0x3a0 ./Core/Src/main.o
- .debug_macro   0x00035a84       0xf1 ./Core/Src/main.o
- .debug_macro   0x00035b75       0x16 ./Core/Src/main.o
- .debug_macro   0x00035b8b       0x91 ./Core/Src/main.o
- .debug_macro   0x00035c1c       0x8d ./Core/Src/main.o
- .debug_macro   0x00035ca9       0x7e ./Core/Src/main.o
- .debug_macro   0x00035d27       0x19 ./Core/Src/main.o
- .debug_macro   0x00035d40       0xf2 ./Core/Src/main.o
- .debug_macro   0x00035e32      0x2db ./Core/Src/stm32h7xx_hal_msp.o
- .debug_macro   0x0003610d      0x2cc ./Core/Src/stm32h7xx_hal_timebase_tim.o
- .debug_macro   0x000363d9      0x2e5 ./Core/Src/stm32h7xx_it.o
- .debug_macro   0x000366be      0x2cc ./Core/Src/system_stm32h7xx.o
- .debug_macro   0x0003698a      0x2f6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00036c80      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_macro   0x00036f4c      0x320 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_macro   0x0003726c      0x2d3 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_macro   0x0003753f      0x398 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.o
- .debug_macro   0x000378d7      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.o
- .debug_macro   0x00037ba3      0x2d4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s.o
- .debug_macro   0x00037e77      0x2d8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd.o
- .debug_macro   0x0003814f      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd_ex.o
- .debug_macro   0x0003841b      0x305 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_macro   0x00038720      0x2f0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.o
- .debug_macro   0x00038a10      0x2f0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_macro   0x00038d00      0x2ea ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_macro   0x00038fea      0x2cd ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
- .debug_macro   0x000392b7      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
- .debug_macro   0x00039583      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.o
- .debug_macro   0x0003984f      0x210 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_macro   0x00039a5f       0x10 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_macro   0x00039a6f       0x20 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_macro   0x00039a8f       0xe9 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_macro   0x00039b78      0x199 ./Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_macro   0x00039d11      0x28b ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_macro   0x00039f9c       0x10 ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_macro   0x00039fac      0x233 ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
- .debug_macro   0x0003a1df      0x1c0 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_macro   0x0000035b      0x189 ./Core/Src/freertos.o
+ .debug_macro   0x000004e4       0x22 ./Core/Src/freertos.o
+ .debug_macro   0x00000506       0x8e ./Core/Src/freertos.o
+ .debug_macro   0x00000594       0x51 ./Core/Src/freertos.o
+ .debug_macro   0x000005e5      0x103 ./Core/Src/freertos.o
+ .debug_macro   0x000006e8       0x6a ./Core/Src/freertos.o
+ .debug_macro   0x00000752      0x1df ./Core/Src/freertos.o
+ .debug_macro   0x00000931       0xf1 ./Core/Src/freertos.o
+ .debug_macro   0x00000a22      0x15a ./Core/Src/freertos.o
+ .debug_macro   0x00000b7c       0xde ./Core/Src/freertos.o
+ .debug_macro   0x00000c5a       0x1c ./Core/Src/freertos.o
+ .debug_macro   0x00000c76       0x26 ./Core/Src/freertos.o
+ .debug_macro   0x00000c9c       0x61 ./Core/Src/freertos.o
+ .debug_macro   0x00000cfd       0x29 ./Core/Src/freertos.o
+ .debug_macro   0x00000d26       0x43 ./Core/Src/freertos.o
+ .debug_macro   0x00000d69       0x34 ./Core/Src/freertos.o
+ .debug_macro   0x00000d9d       0x16 ./Core/Src/freertos.o
+ .debug_macro   0x00000db3       0x43 ./Core/Src/freertos.o
+ .debug_macro   0x00000df6       0x34 ./Core/Src/freertos.o
+ .debug_macro   0x00000e2a       0x10 ./Core/Src/freertos.o
+ .debug_macro   0x00000e3a       0x58 ./Core/Src/freertos.o
+ .debug_macro   0x00000e92       0x8e ./Core/Src/freertos.o
+ .debug_macro   0x00000f20       0x1c ./Core/Src/freertos.o
+ .debug_macro   0x00000f3c      0x177 ./Core/Src/freertos.o
+ .debug_macro   0x000010b3       0x10 ./Core/Src/freertos.o
+ .debug_macro   0x000010c3       0x35 ./Core/Src/freertos.o
+ .debug_macro   0x000010f8      0x4fe ./Core/Src/freertos.o
+ .debug_macro   0x000015f6       0xb5 ./Core/Src/freertos.o
+ .debug_macro   0x000016ab       0xaa ./Core/Src/freertos.o
+ .debug_macro   0x00001755      0x244 ./Core/Src/freertos.o
+ .debug_macro   0x00001999       0x2e ./Core/Src/freertos.o
+ .debug_macro   0x000019c7       0x3b ./Core/Src/freertos.o
+ .debug_macro   0x00001a02       0x1c ./Core/Src/freertos.o
+ .debug_macro   0x00001a1e       0x22 ./Core/Src/freertos.o
+ .debug_macro   0x00001a40       0xfb ./Core/Src/freertos.o
+ .debug_macro   0x00001b3b     0x1305 ./Core/Src/freertos.o
+ .debug_macro   0x00002e40      0x11f ./Core/Src/freertos.o
+ .debug_macro   0x00002f5f       0x27 ./Core/Src/freertos.o
+ .debug_macro   0x00002f86    0x25eee ./Core/Src/freertos.o
+ .debug_macro   0x00028e74       0x6d ./Core/Src/freertos.o
+ .debug_macro   0x00028ee1     0x3d79 ./Core/Src/freertos.o
+ .debug_macro   0x0002cc5a      0x369 ./Core/Src/freertos.o
+ .debug_macro   0x0002cfc3      0x19b ./Core/Src/freertos.o
+ .debug_macro   0x0002d15e       0x5d ./Core/Src/freertos.o
+ .debug_macro   0x0002d1bb     0x240e ./Core/Src/freertos.o
+ .debug_macro   0x0002f5c9     0x102c ./Core/Src/freertos.o
+ .debug_macro   0x000305f5      0x154 ./Core/Src/freertos.o
+ .debug_macro   0x00030749      0x114 ./Core/Src/freertos.o
+ .debug_macro   0x0003085d      0x3b6 ./Core/Src/freertos.o
+ .debug_macro   0x00030c13       0xac ./Core/Src/freertos.o
+ .debug_macro   0x00030cbf      0x72d ./Core/Src/freertos.o
+ .debug_macro   0x000313ec      0x228 ./Core/Src/freertos.o
+ .debug_macro   0x00031614       0x66 ./Core/Src/freertos.o
+ .debug_macro   0x0003167a      0x3bb ./Core/Src/freertos.o
+ .debug_macro   0x00031a35      0x3e4 ./Core/Src/freertos.o
+ .debug_macro   0x00031e19      0x275 ./Core/Src/freertos.o
+ .debug_macro   0x0003208e      0x3ca ./Core/Src/freertos.o
+ .debug_macro   0x00032458      0x3de ./Core/Src/freertos.o
+ .debug_macro   0x00032836       0x3c ./Core/Src/freertos.o
+ .debug_macro   0x00032872       0x4a ./Core/Src/freertos.o
+ .debug_macro   0x000328bc      0x22c ./Core/Src/freertos.o
+ .debug_macro   0x00032ae8       0x67 ./Core/Src/freertos.o
+ .debug_macro   0x00032b4f       0xa5 ./Core/Src/freertos.o
+ .debug_macro   0x00032bf4      0x25d ./Core/Src/freertos.o
+ .debug_macro   0x00032e51      0x1c4 ./Core/Src/freertos.o
+ .debug_macro   0x00033015      0x25e ./Core/Src/freertos.o
+ .debug_macro   0x00033273       0x35 ./Core/Src/freertos.o
+ .debug_macro   0x000332a8      0x2d4 ./Core/Src/freertos.o
+ .debug_macro   0x0003357c      0xafa ./Core/Src/freertos.o
+ .debug_macro   0x00034076      0x29f ./Core/Src/freertos.o
+ .debug_macro   0x00034315      0x293 ./Core/Src/freertos.o
+ .debug_macro   0x000345a8       0x90 ./Core/Src/freertos.o
+ .debug_macro   0x00034638      0x5a0 ./Core/Src/freertos.o
+ .debug_macro   0x00034bd8       0x40 ./Core/Src/freertos.o
+ .debug_macro   0x00034c18      0x3a0 ./Core/Src/main.o
+ .debug_macro   0x00034fb8       0xf1 ./Core/Src/main.o
+ .debug_macro   0x000350a9       0x16 ./Core/Src/main.o
+ .debug_macro   0x000350bf       0x91 ./Core/Src/main.o
+ .debug_macro   0x00035150       0x8d ./Core/Src/main.o
+ .debug_macro   0x000351dd       0x7e ./Core/Src/main.o
+ .debug_macro   0x0003525b       0x19 ./Core/Src/main.o
+ .debug_macro   0x00035274       0xf2 ./Core/Src/main.o
+ .debug_macro   0x00035366      0x2db ./Core/Src/stm32h7xx_hal_msp.o
+ .debug_macro   0x00035641      0x2cc ./Core/Src/stm32h7xx_hal_timebase_tim.o
+ .debug_macro   0x0003590d      0x2e5 ./Core/Src/stm32h7xx_it.o
+ .debug_macro   0x00035bf2      0x2cc ./Core/Src/system_stm32h7xx.o
+ .debug_macro   0x00035ebe      0x2f6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x000361b4      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_macro   0x00036480      0x320 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_macro   0x000367a0      0x2d3 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_macro   0x00036a73      0x398 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.o
+ .debug_macro   0x00036e0b      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.o
+ .debug_macro   0x000370d7      0x2d4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s.o
+ .debug_macro   0x000373ab      0x2d8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd.o
+ .debug_macro   0x00037683      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd_ex.o
+ .debug_macro   0x0003794f      0x305 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_macro   0x00037c54      0x2f0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.o
+ .debug_macro   0x00037f44      0x2f0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_macro   0x00038234      0x2ea ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_macro   0x0003851e      0x2cd ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
+ .debug_macro   0x000387eb      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
+ .debug_macro   0x00038ab7      0x2cc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.o
+ .debug_macro   0x00038d83      0x210 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_macro   0x00038f93       0x10 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_macro   0x00038fa3       0x20 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_macro   0x00038fc3       0xe9 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_macro   0x000390ac      0x199 ./Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_macro   0x00039245      0x28b ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_macro   0x000394d0       0x10 ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_macro   0x000394e0      0x233 ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+ .debug_macro   0x00039713      0x1c0 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
 .debug_line     0x00000000    0x238fc
  .debug_line    0x00000000      0xa31 ./Core/Src/freertos.o
