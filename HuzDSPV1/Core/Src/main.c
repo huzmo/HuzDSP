@@ -62,6 +62,7 @@ PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 osThreadId defaultTaskHandle;
 osThreadId UITaskHandle;
+osThreadId AudioProcTaskHandle;
 /* USER CODE BEGIN PV */
 xQueueHandle xUserInputEvent;
 
@@ -81,6 +82,7 @@ static void MX_QUADSPI_Init(void);
 static void MX_TIM3_Init(void);
 void StartDefaultTask(void const * argument);
 void StartUITask(void const * argument);
+void StartAudioProcTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -158,6 +160,10 @@ int main(void)
   /* definition and creation of UITask */
   osThreadDef(UITask, StartUITask, osPriorityNormal, 0, 1024);
   UITaskHandle = osThreadCreate(osThread(UITask), NULL);
+
+  /* definition and creation of AudioProcTask */
+  osThreadDef(AudioProcTask, StartAudioProcTask, osPriorityRealtime, 0, 128);
+  AudioProcTaskHandle = osThreadCreate(osThread(AudioProcTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -613,6 +619,24 @@ void StartUITask(void const * argument)
       osDelay(30);
   }
   /* USER CODE END StartUITask */
+}
+
+/* USER CODE BEGIN Header_StartAudioProcTask */
+/**
+* @brief Function implementing the AudioProcTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartAudioProcTask */
+void StartAudioProcTask(void const * argument)
+{
+  /* USER CODE BEGIN StartAudioProcTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartAudioProcTask */
 }
 
  /* MPU Configuration */

@@ -1,0 +1,15 @@
+/*
+ * DSP_IIR_LPF.h
+ *
+ *  Created on: Dec 18, 2025
+ *      Author: Huzaifa
+ */
+
+#ifndef INC_DSP_DSP_IIR_LPF_H_
+#define INC_DSP_DSP_IIR_LPF_H_
+
+#include "math.h"
+
+void DSP_IIR_LPF_Init(float *data);
+
+#endif /* INC_DSP_DSP_IIR_LPF_H_ */
