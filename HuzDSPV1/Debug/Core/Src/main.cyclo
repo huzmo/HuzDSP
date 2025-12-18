@@ -10,6 +10,6 @@
 ../Core/Src/main.c:523:6:HAL_GPIO_EXTI_Callback	4
 ../Core/Src/main.c:549:6:StartDefaultTask	1
 ../Core/Src/main.c:567:6:StartUITask	8
-../Core/Src/main.c:630:6:MPU_Config	1
-../Core/Src/main.c:665:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:682:6:Error_Handler	1
+../Core/Src/main.c:620:6:MPU_Config	1
+../Core/Src/main.c:655:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:672:6:Error_Handler	1

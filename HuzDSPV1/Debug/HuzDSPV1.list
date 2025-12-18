@@ -2098,7 +2098,6 @@ void StartUITask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      /* ---------- Read encoder ---------- */
       UI_state.cnt_curr = TIM3->CNT;
  8000fac:	4b37      	ldr	r3, [pc, #220]	@ (800108c <StartUITask+0xf0>)
  8000fae:	6a5b      	ldr	r3, [r3, #36]	@ 0x24
@@ -2116,7 +2115,6 @@ void StartUITask(void const * argument)
  8000fc4:	b21b      	sxth	r3, r3
  8000fc6:	613b      	str	r3, [r7, #16]
 
-      /* Normalize encoder delta */
       int16_t delta = 0;
  8000fc8:	2300      	movs	r3, #0
  8000fca:	82fb      	strh	r3, [r7, #22]
@@ -2134,7 +2132,6 @@ void StartUITask(void const * argument)
  8000fde:	f64f 73ff 	movw	r3, #65535	@ 0xffff
  8000fe2:	82fb      	strh	r3, [r7, #22]
 
-      /* ---------- Handle button ---------- */
       if (xQueueReceive(xUserInputEvent, &event, 0) == pdPASS)
  8000fe4:	4b2b      	ldr	r3, [pc, #172]	@ (8001094 <StartUITask+0xf8>)
  8000fe6:	681b      	ldr	r3, [r3, #0]
@@ -2157,7 +2154,6 @@ void StartUITask(void const * argument)
           }
       }
 
-      /* ---------- Handle encoder ---------- */
       if (delta != 0)
  8001006:	f9b7 3016 	ldrsh.w	r3, [r7, #22]
  800100a:	2b00      	cmp	r3, #0
@@ -2169,17 +2165,13 @@ void StartUITask(void const * argument)
  8001014:	2b03      	cmp	r3, #3
  8001016:	d120      	bne.n	800105a <StartUITask+0xbe>
           {
-              /* Edit parameter value */
-              uint32_t *val =
-                  &UI_state.parameter_values[UI_state.selected_effect]
+              uint32_t *val = &UI_state.parameter_values[UI_state.selected_effect][UI_state.current_parameter_pos];
  8001018:	4b1d      	ldr	r3, [pc, #116]	@ (8001090 <StartUITask+0xf4>)
  800101a:	f993 3155 	ldrsb.w	r3, [r3, #341]	@ 0x155
  800101e:	461a      	mov	r2, r3
-                                             [UI_state.current_parameter_pos];
  8001020:	4b1b      	ldr	r3, [pc, #108]	@ (8001090 <StartUITask+0xf4>)
  8001022:	f993 3157 	ldrsb.w	r3, [r3, #343]	@ 0x157
  8001026:	4619      	mov	r1, r3
-              uint32_t *val =
  8001028:	4613      	mov	r3, r2
  800102a:	005b      	lsls	r3, r3, #1
  800102c:	4413      	add	r3, r2
@@ -2199,7 +2191,6 @@ void StartUITask(void const * argument)
  8001046:	68fb      	ldr	r3, [r7, #12]
  8001048:	601a      	str	r2, [r3, #0]
 
-              /* Wrap or clamp */
               if (*val > 100) *val = 0;
  800104a:	68fb      	ldr	r3, [r7, #12]
  800104c:	681b      	ldr	r3, [r3, #0]
@@ -2213,7 +2204,6 @@ void StartUITask(void const * argument)
           }
           else
           {
-              /* Navigate menus */
               UI_UpdateSelection(&UI_state, delta);
  800105a:	f9b7 3016 	ldrsh.w	r3, [r7, #22]
  800105e:	4619      	mov	r1, r3
@@ -2222,7 +2212,6 @@ void StartUITask(void const * argument)
           }
       }
 
-      /* ---------- Draw UI ---------- */
       ssd1306_Fill(Black);
  8001066:	2000      	movs	r0, #0
  8001068:	f000 fe0c 	bl	8001c84 <ssd1306_Fill>
