@@ -23,8 +23,12 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "UI/UI_Init.h"
+#include "UI/UI_Update.h"
 
 #include "DSP/DSP_Init.h"
+
+#include "ssd1306.h"
+#include "ssd1306_fonts.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,8 +61,12 @@ TIM_HandleTypeDef htim3;
 PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 osThreadId defaultTaskHandle;
+osThreadId UITaskHandle;
 /* USER CODE BEGIN PV */
 xQueueHandle xUserInputEvent;
+
+uint32_t currTime = 0;
+uint32_t prevTime = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -72,6 +80,7 @@ static void MX_USB_OTG_HS_PCD_Init(void);
 static void MX_QUADSPI_Init(void);
 static void MX_TIM3_Init(void);
 void StartDefaultTask(void const * argument);
+void StartUITask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -145,6 +154,10 @@ int main(void)
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of UITask */
+  osThreadDef(UITask, StartUITask, osPriorityNormal, 0, 1024);
+  UITaskHandle = osThreadCreate(osThread(UITask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -511,11 +524,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	UI_event_t event;
-	// -------- need to add debounce --------
-	if(GPIO_Pin == Encoder_SW_Pin) {
+
+	currTime = HAL_GetTick();
+
+	if(GPIO_Pin == Encoder_SW_Pin && (currTime - prevTime > 50)) {
 		event.type = UI_EVENT_SWITCH;
 		xQueueSendFromISR(xUserInputEvent, &event, &xHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		prevTime = currTime;
 	  } else {
 		  __NOP();
 	  }
@@ -539,6 +555,64 @@ void StartDefaultTask(void const * argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartUITask */
+/**
+* @brief Function implementing the UITask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUITask */
+void StartUITask(void const * argument)
+{
+  /* USER CODE BEGIN StartUITask */
+	UI_event_t event;
+	UI_state.cnt_prev = TIM3->CNT;
+  /* Infinite loop */
+  for(;;)
+  {
+      UI_state.cnt_curr = TIM3->CNT;
+      int32_t raw_delta = (int16_t)(UI_state.cnt_curr - UI_state.cnt_prev);
+
+      int16_t delta = 0;
+      if (raw_delta > 0)      delta = 1;
+      else if (raw_delta < 0) delta = -1;
+
+      if (xQueueReceive(xUserInputEvent, &event, 0) == pdPASS)
+      {
+          if (event.type == UI_EVENT_SWITCH)
+          {
+              UI_SwitchStates(&UI_state);
+          }
+      }
+
+      if (delta != 0)
+      {
+          if (UI_state.active_page == UI_PAGE_VALUE_ENTRY)
+          {
+              uint32_t *val = &UI_state.parameter_values[UI_state.selected_effect][UI_state.current_parameter_pos];
+
+              *val += delta;
+
+              if (*val > 100) *val = 0;
+              else if (*val < 0) *val = 100;
+          }
+          else
+          {
+              UI_UpdateSelection(&UI_state, delta);
+          }
+      }
+
+      ssd1306_Fill(Black);
+      UI_UpdateOLED(&UI_state);
+      UI_DrawSelectedOption(&UI_state);
+      ssd1306_UpdateScreen();
+
+      UI_state.cnt_prev = UI_state.cnt_curr;
+      osDelay(30);
+  }
+  /* USER CODE END StartUITask */
 }
 
  /* MPU Configuration */

@@ -26,6 +26,7 @@ Core/Src/DSP \
 Core/Src/UI \
 Core/Src \
 Core/Startup \
+Drivers/OLED \
 Drivers/STM32H7xx_HAL_Driver/Src \
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
 Middlewares/Third_Party/FreeRTOS/Source \

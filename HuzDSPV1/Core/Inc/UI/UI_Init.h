@@ -7,7 +7,9 @@
 
 #ifndef __UI_INIT_H
 #define __UI_INIT_H
+
 #include <stdint.h>
+#include <string.h>
 void UI_Init(void);
 
 
@@ -30,18 +32,38 @@ typedef struct
     encoder_dir_t   dir;   // don't care if switch
 } UI_event_t;
 
+typedef enum {
+    UI_PAGE_INIT,
+    UI_PAGE_MAIN,
+	UI_PAGE_PARAMETER_SELECT,
+	UI_PAGE_VALUE_ENTRY,
+    UI_PAGE_EFFECT_SELECT
+} UI_page_t;
 
 typedef struct
 {
-    int32_t cnt_prev; // stores the old encoder value
-    int32_t cnt_curr; // stores the current encoder value
+    uint32_t cnt_prev; // stores the old encoder value
+    uint32_t cnt_curr; // stores the current encoder value
     int32_t delta;    // stores the difference between encoder values
 
     uint8_t button_state;
     uint32_t button_last_change;
 
-    uint8_t active_page;
-    uint8_t selected_param;
+    char available_effect_labels[8][16];
+    char chosen_effect_labels[3][16];
+    char parameter_val_labels[3][3][16];
+
+    UI_page_t active_page; // state machine encoding
+    int8_t selected_effect;
+    int8_t selected_param;
+    int8_t current_parameter_pos;
+    uint8_t parameter_input_complete;
+    uint32_t parameter_values[3][3]; // 3 chainable effects and 3 alterable values per effect
 } UI_state_t;
 
+extern UI_state_t UI_state; // global struct
+const unsigned char* UI_GetActiveBitmap(UI_page_t page);
+const extern unsigned char UI_Init_Screen[];
+const extern unsigned char UI_Main_Screen[];
+const extern unsigned char UI_BlankScreen[512];
 #endif

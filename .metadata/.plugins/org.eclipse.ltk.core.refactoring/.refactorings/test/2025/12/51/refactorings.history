@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;test/Drivers/OLED/ssd1306_conf_template.h&apos; to &apos;ssd1306_conf.h&apos;" description="Rename resource &apos;ssd1306_conf_template.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Drivers/OLED/ssd1306_conf_template.h" name="ssd1306_conf.h" stamp="1765845500149" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;test/Core/Inc/UI_Bitmap&apos; to &apos;UI_Bitmap.h&apos;" description="Rename resource &apos;UI_Bitmap&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Inc/UI_Bitmap" name="UI_Bitmap.h" stamp="1765847019196" updateReferences="true"/>
+</session>

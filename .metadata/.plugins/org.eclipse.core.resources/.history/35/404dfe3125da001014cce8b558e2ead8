@@ -1,0 +1,14 @@
+/*
+ * UI_Update.h
+ *
+ *  Created on: Dec 15, 2025
+ *      Author: Huzaifa
+ */
+
+#ifndef INC_UI_UI_UPDATE_H_
+#define INC_UI_UI_UPDATE_H_
+
+void UI_UpdateOLED(void);
+
+
+#endif /* INC_UI_UI_UPDATE_H_ */

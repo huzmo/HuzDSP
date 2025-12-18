@@ -169,3 +169,66 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.help.base 2 0 2025-12-15 13:50:13.246
 !MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.cdt.doc.user_11.4.0.202309142347 [184]'. The index should be rebuilt with Lucene 9.8.0
+!SESSION 2025-12-15 17:22:22.741 -----------------------------------------------
+eclipse.buildId=Version 1.16.1
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-15 17:22:40.748
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-15 17:22:40.750
+!MESSAGE Log4j2 initialized with config file C:\Users\Huzaifa\Documents\firmware\DSP\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-15 17:22:46.028
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-15 17:25:59.534
+!MESSAGE Indexed 'tests' (19 sources, 81 headers) in 2.02 sec: 4,284 declarations; 17,938 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.009%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-15 17:27:30.595
+!MESSAGE Indexed 'test' (19 sources, 81 headers) in 1.32 sec: 4,284 declarations; 17,938 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.009%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-15 17:39:47.770
+!MESSAGE Indexed 'test' (25 sources, 92 headers) in 1.17 sec: 7,301 declarations; 46,971 references; 1 unresolved inclusions; 1 syntax errors; 4 unresolved names (0.0074%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-15 17:39:50.252
+!MESSAGE Indexed 'test' (25 sources, 92 headers) in 0.726 sec: 7,301 declarations; 46,971 references; 1 unresolved inclusions; 1 syntax errors; 4 unresolved names (0.0074%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-15 17:39:54.812
+!MESSAGE Indexed 'test' (25 sources, 92 headers) in 0.737 sec: 7,301 declarations; 46,971 references; 1 unresolved inclusions; 1 syntax errors; 4 unresolved names (0.0074%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-15 17:40:37.006
+!MESSAGE Indexed 'test' (25 sources, 92 headers) in 0.778 sec: 7,301 declarations; 46,971 references; 1 unresolved inclusions; 1 syntax errors; 4 unresolved names (0.0074%)
+!SESSION 2025-12-16 11:02:00.533 -----------------------------------------------
+eclipse.buildId=Version 1.16.1
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-16 11:02:22.101
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-16 11:02:22.111
+!MESSAGE Log4j2 initialized with config file C:\Users\Huzaifa\Documents\firmware\DSP\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-16 11:02:29.851
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-17 13:53:14.728 -----------------------------------------------
+eclipse.buildId=Version 1.16.1
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-17 13:53:33.197
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-17 13:53:33.207
+!MESSAGE Log4j2 initialized with config file C:\Users\Huzaifa\Documents\firmware\DSP\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-17 13:53:40.303
+!MESSAGE Started RMI Server, listening on port 41337

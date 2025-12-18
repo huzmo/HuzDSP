@@ -1,0 +1,18 @@
+/*
+ * UI_Update.h
+ *
+ *  Created on: Dec 15, 2025
+ *      Author: Huzaifa
+ */
+
+#ifndef INC_UI_UI_UPDATE_H_
+#define INC_UI_UI_UPDATE_H_
+
+#include "UI/UI_Init.h"
+#include "ssd1306.h"
+
+void UI_DrawSelectedOption(volatile const UI_state_t *state);
+void UI_WriteText(volatile const UI_state_t *state);
+void UI_UpdateOLED(volatile const UI_state_t *state);
+
+#endif /* INC_UI_UI_UPDATE_H_ */
