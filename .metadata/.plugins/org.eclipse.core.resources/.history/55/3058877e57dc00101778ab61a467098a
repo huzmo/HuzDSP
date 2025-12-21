@@ -1,0 +1,14 @@
+/*
+ * DSP_Init.c
+ *
+ *  Created on: Dec 15, 2025
+ *      Author: Huzaifa
+ */
+
+#include "DSP/DSP_IIR_LPF.h"
+
+typedef struct {
+	uint8_t Config_Mask; // stores a bit for every effect enabled
+} DSP_Stream_t;
+
+void DSP_Init

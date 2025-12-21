@@ -54,7 +54,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/UI/UI_Init.h ../Core/Inc/UI/UI_Update.h \
  C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306.h \
  C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306_conf.h \
- ../Core/Inc/DSP/DSP_Init.h \
+ ../Core/Inc/DSP/DSP_Init.h ../Core/Inc/DSP/DSP_IIR_LPF.h \
  C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306_fonts.h \
  C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306.h
 ../Core/Inc/main.h:
@@ -115,5 +115,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306.h:
 C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306_conf.h:
 ../Core/Inc/DSP/DSP_Init.h:
+../Core/Inc/DSP/DSP_IIR_LPF.h:
 C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306_fonts.h:
 C:/Users/Huzaifa/Documents/firmware/DSP/HuzDSPV1/Drivers/OLED/ssd1306.h:

@@ -1,0 +1,17 @@
+/*
+ * DSP_IIR_LPF.c
+ *
+ *  Created on: Dec 18, 2025
+ *      Author: Huzaifa
+ */
+
+
+#include "DSP/DSP_IIR_LPF.h"
+
+// IIR low-pass filter module of simple RC filter
+// Based off Phil's Lab #159 lesson video
+
+void DSP_IIR_LPF_Init(DSP_LPF *filter){
+	 filter -> cBi[0] = 1.0f;
+}
+
