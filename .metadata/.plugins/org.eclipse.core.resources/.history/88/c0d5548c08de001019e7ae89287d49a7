@@ -1,0 +1,779 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "cmsis_os.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "UI/UI_Init.h"
+#include "UI/UI_Update.h"
+
+#include "DSP/DSP_Init.h"
+
+#include "ssd1306.h"
+#include "ssd1306_fonts.h"
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+#define BUFFER_SIZE 256
+#define AUDIO_NOTIFY_READY   (1u << 0)
+#define FLOAT_TO_INT24 8388608.0f   // 2^23
+#define INT24_TO_FLOAT (1.0f / 8388608.0f)
+
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+
+I2C_HandleTypeDef hi2c4;
+
+I2S_HandleTypeDef hi2s3;
+DMA_HandleTypeDef hdma_spi3_rx;
+DMA_HandleTypeDef hdma_spi3_tx;
+
+QSPI_HandleTypeDef hqspi;
+
+TIM_HandleTypeDef htim3;
+
+PCD_HandleTypeDef hpcd_USB_OTG_HS;
+
+osThreadId defaultTaskHandle;
+osThreadId UITaskHandle;
+osThreadId AudioProcTaskHandle;
+/* USER CODE BEGIN PV */
+xQueueHandle xUserInputEvent;
+
+uint32_t currTime = 0;
+uint32_t prevTime = 0;
+
+int32_t adcData[BUFFER_SIZE];
+int32_t dacData[BUFFER_SIZE];
+
+static volatile int32_t *pBufIn;
+static volatile int32_t *pBufOut = &dacData[0];
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MPU_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
+static void MX_I2C4_Init(void);
+static void MX_I2S3_Init(void);
+static void MX_USB_OTG_HS_PCD_Init(void);
+static void MX_QUADSPI_Init(void);
+static void MX_TIM3_Init(void);
+void StartDefaultTask(void const * argument);
+void StartUITask(void const * argument);
+void StartAudioProcTask(void const * argument);
+
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef *hi2s3){
+	pBufIn = &adcData[0];
+	pBufOut = &dacData[0];
+
+	// unblock audio processing task
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	xTaskNotifyFromISR(AudioProcTaskHandle, AUDIO_NOTIFY_READY, eSetBits, &xHigherPriorityTaskWoken);
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+}
+
+void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef *hi2s3){
+	pBufIn = &adcData[BUFFER_SIZE / 2];
+	pBufOut = &dacData[BUFFER_SIZE / 2];
+
+	// unblock audio processing task
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	xTaskNotifyFromISR(AudioProcTaskHandle, AUDIO_NOTIFY_READY, eSetBits, &xHigherPriorityTaskWoken);
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+}
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_I2C4_Init();
+  MX_I2S3_Init();
+  MX_USB_OTG_HS_PCD_Init();
+  MX_QUADSPI_Init();
+  MX_TIM3_Init();
+  /* USER CODE BEGIN 2 */
+  UI_Init();
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // begin reading encoder
+  /* USER CODE END 2 */
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  xUserInputEvent = xQueueCreate(16, sizeof(UI_event_t));
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* definition and creation of defaultTask */
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of UITask */
+  osThreadDef(UITask, StartUITask, osPriorityNormal, 0, 1024);
+  UITaskHandle = osThreadCreate(osThread(UITask), NULL);
+
+  /* definition and creation of AudioProcTask */
+  osThreadDef(AudioProcTask, StartAudioProcTask, osPriorityRealtime, 0, 128);
+  AudioProcTaskHandle = osThreadCreate(osThread(AudioProcTask), NULL);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Supply configuration update enable
+  */
+  HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
+
+  /** Configure the main internal regulator output voltage
+  */
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+
+  while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 1;
+  RCC_OscInitStruct.PLL.PLLN = 13;
+  RCC_OscInitStruct.PLL.PLLP = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 12;
+  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOMEDIUM;
+  RCC_OscInitStruct.PLL.PLLFRACN = 0;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
+                              |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
+  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Enables the Clock Security System
+  */
+  HAL_RCC_EnableCSS();
+}
+
+/**
+  * @brief I2C4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C4_Init(void)
+{
+
+  /* USER CODE BEGIN I2C4_Init 0 */
+
+  /* USER CODE END I2C4_Init 0 */
+
+  /* USER CODE BEGIN I2C4_Init 1 */
+
+  /* USER CODE END I2C4_Init 1 */
+  hi2c4.Instance = I2C4;
+  hi2c4.Init.Timing = 0x00909BEA;
+  hi2c4.Init.OwnAddress1 = 0;
+  hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c4.Init.OwnAddress2 = 0;
+  hi2c4.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c4.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c4.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c4, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C4_Init 2 */
+
+  /* USER CODE END I2C4_Init 2 */
+
+}
+
+/**
+  * @brief I2S3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2S3_Init(void)
+{
+
+  /* USER CODE BEGIN I2S3_Init 0 */
+
+  /* USER CODE END I2S3_Init 0 */
+
+  /* USER CODE BEGIN I2S3_Init 1 */
+
+  /* USER CODE END I2S3_Init 1 */
+  hi2s3.Instance = SPI3;
+  hi2s3.Init.Mode = I2S_MODE_MASTER_FULLDUPLEX;
+  hi2s3.Init.Standard = I2S_STANDARD_PHILIPS;
+  hi2s3.Init.DataFormat = I2S_DATAFORMAT_24B;
+  hi2s3.Init.MCLKOutput = I2S_MCLKOUTPUT_ENABLE;
+  hi2s3.Init.AudioFreq = I2S_AUDIOFREQ_48K;
+  hi2s3.Init.CPOL = I2S_CPOL_LOW;
+  hi2s3.Init.FirstBit = I2S_FIRSTBIT_MSB;
+  hi2s3.Init.WSInversion = I2S_WS_INVERSION_DISABLE;
+  hi2s3.Init.Data24BitAlignment = I2S_DATA_24BIT_ALIGNMENT_RIGHT;
+  hi2s3.Init.MasterKeepIOState = I2S_MASTER_KEEP_IO_STATE_DISABLE;
+  if (HAL_I2S_Init(&hi2s3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2S3_Init 2 */
+
+  /* USER CODE END I2S3_Init 2 */
+
+}
+
+/**
+  * @brief QUADSPI Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_QUADSPI_Init(void)
+{
+
+  /* USER CODE BEGIN QUADSPI_Init 0 */
+
+  /* USER CODE END QUADSPI_Init 0 */
+
+  /* USER CODE BEGIN QUADSPI_Init 1 */
+
+  /* USER CODE END QUADSPI_Init 1 */
+  /* QUADSPI parameter configuration*/
+  hqspi.Instance = QUADSPI;
+  hqspi.Init.ClockPrescaler = 255;
+  hqspi.Init.FifoThreshold = 1;
+  hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
+  hqspi.Init.FlashSize = 1;
+  hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
+  hqspi.Init.ClockMode = QSPI_CLOCK_MODE_0;
+  hqspi.Init.FlashID = QSPI_FLASH_ID_1;
+  hqspi.Init.DualFlash = QSPI_DUALFLASH_DISABLE;
+  if (HAL_QSPI_Init(&hqspi) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN QUADSPI_Init 2 */
+
+  /* USER CODE END QUADSPI_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_Encoder_InitTypeDef sConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 0;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 65535;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
+  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
+  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
+  sConfig.IC1Filter = 10;
+  sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
+  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
+  sConfig.IC2Filter = 10;
+  if (HAL_TIM_Encoder_Init(&htim3, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
+  * @brief USB_OTG_HS Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USB_OTG_HS_PCD_Init(void)
+{
+
+  /* USER CODE BEGIN USB_OTG_HS_Init 0 */
+
+  /* USER CODE END USB_OTG_HS_Init 0 */
+
+  /* USER CODE BEGIN USB_OTG_HS_Init 1 */
+
+  /* USER CODE END USB_OTG_HS_Init 1 */
+  hpcd_USB_OTG_HS.Instance = USB_OTG_HS;
+  hpcd_USB_OTG_HS.Init.dev_endpoints = 9;
+  hpcd_USB_OTG_HS.Init.speed = PCD_SPEED_HIGH;
+  hpcd_USB_OTG_HS.Init.dma_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.phy_itface = USB_OTG_ULPI_PHY;
+  hpcd_USB_OTG_HS.Init.Sof_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.low_power_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.lpm_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.vbus_sensing_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.use_dedicated_ep1 = DISABLE;
+  hpcd_USB_OTG_HS.Init.use_external_vbus = DISABLE;
+  if (HAL_PCD_Init(&hpcd_USB_OTG_HS) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USB_OTG_HS_Init 2 */
+
+  /* USER CODE END USB_OTG_HS_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(USB_SW_GPIO_Port, USB_SW_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : Encoder_SW_Pin */
+  GPIO_InitStruct.Pin = Encoder_SW_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Encoder_SW_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LED_Pin */
+  GPIO_InitStruct.Pin = LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : USB_SW_Pin */
+  GPIO_InitStruct.Pin = USB_SW_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(USB_SW_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
+// ---------- Encoder Switch Interrupt Handle ---------
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	UI_event_t event;
+
+	currTime = HAL_GetTick();
+
+	if(GPIO_Pin == Encoder_SW_Pin && (currTime - prevTime > 50)) {
+		event.type = UI_EVENT_SWITCH;
+		xQueueSendFromISR(xUserInputEvent, &event, &xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		prevTime = currTime;
+	  } else {
+		  __NOP();
+	  }
+}
+
+/* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void const * argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartUITask */
+/**
+* @brief Function implementing the UITask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUITask */
+void StartUITask(void const * argument)
+{
+  /* USER CODE BEGIN StartUITask */
+	UI_event_t event;
+	UI_state.cnt_prev = TIM3->CNT;
+  /* Infinite loop */
+  for(;;)
+  {
+      UI_state.cnt_curr = TIM3->CNT;
+      int32_t raw_delta = (int16_t)(UI_state.cnt_curr - UI_state.cnt_prev);
+
+      int16_t delta = 0;
+      if (raw_delta > 0)      delta = 1;
+      else if (raw_delta < 0) delta = -1;
+
+      if (xQueueReceive(xUserInputEvent, &event, 0) == pdPASS)
+      {
+          if (event.type == UI_EVENT_SWITCH)
+          {
+              UI_SwitchStates(&UI_state);
+          }
+      }
+
+      if (delta != 0)
+      {
+          if (UI_state.active_page == UI_PAGE_VALUE_ENTRY)
+          {
+              uint32_t *val = &UI_state.parameter_values[UI_state.selected_effect][UI_state.current_parameter_pos];
+
+              *val += delta;
+
+              if (*val > 100) *val = 0;
+              else if (*val < 0) *val = 100;
+          }
+          else
+          {
+              UI_UpdateSelection(&UI_state, delta);
+          }
+      }
+
+      ssd1306_Fill(Black);
+      UI_UpdateOLED(&UI_state);
+      UI_DrawSelectedOption(&UI_state);
+      ssd1306_UpdateScreen();
+
+      UI_state.cnt_prev = UI_state.cnt_curr;
+      osDelay(30);
+  }
+  /* USER CODE END StartUITask */
+}
+
+/* USER CODE BEGIN Header_StartAudioProcTask */
+/**
+* @brief Function implementing the AudioProcTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartAudioProcTask */
+void StartAudioProcTask(void const * argument)
+{
+  /* USER CODE BEGIN StartAudioProcTask */
+	uint32_t DataReady;
+  /* Infinite loop */
+  for(;;)
+  {
+	  // block until sample is ready
+      xTaskNotifyWait(0, AUDIO_NOTIFY_READY, &DataReady, portMAX_DELAY);
+
+      static float RightIn; // device is mono input
+      static float RightOut, LeftOut;
+
+      for(uint16_t i = 0; i < (BUFFER_SIZE / 2) - 1; i += 2){
+    	  int32_t rawR = pBufIn[i + 1] >> 8;
+    	  RightIn = rawR * INT24_TO_FLOAT;
+
+    	  // add routing algorithm for dsp
+    	  RightOut = RightIn;
+    	  LeftOut  = RightIn;
+
+    	  // clipping range
+          if (LeftOut  >  1.0f) LeftOut  =  1.0f;
+          if (LeftOut  < -1.0f) LeftOut  = -1.0f;
+          if (RightOut >  1.0f) RightOut =  1.0f;
+          if (RightOut < -1.0f) RightOut = -1.0f;
+
+          int32_t outL = (int32_t)(LeftOut  * FLOAT_TO_INT24);
+          int32_t outR = (int32_t)(RightOut * FLOAT_TO_INT24);
+
+          pBufOut[i]     = outL << 8;
+          pBufOut[i + 1] = outR << 8;
+      }
+  }
+  /* USER CODE END StartAudioProcTask */
+}
+
+ /* MPU Configuration */
+
+void MPU_Config(void)
+{
+  MPU_Region_InitTypeDef MPU_InitStruct = {0};
+
+  /* Disables the MPU */
+  HAL_MPU_Disable();
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x0;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_4GB;
+  MPU_InitStruct.SubRegionDisable = 0x87;
+  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_NO_ACCESS;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
+  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  /* Enables the MPU */
+  HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
+
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */

@@ -1,0 +1,41 @@
+[33mcommit 038de347b867b70452639e5ad228a1fbb5c432d7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Thu Dec 18 14:35:22 2025 -0700
+
+    Describe what you changedgit commit -m
+
+[33mcommit b17b2fed5b1871dc7f0bde5e4899e4190e637e40[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Wed Dec 17 17:44:52 2025 -0700
+
+    Completed OLED UI Frontend and Backend
+
+[33mcommit d7558b335d9d38dafda7d3f9c8d26d3d78a7acb0[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Wed Dec 17 17:41:03 2025 -0700
+
+    Remove test directory from tracking
+
+[33mcommit 17095dbbc7b8cafc7eb9606facc7c3050f266c56[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Mon Dec 15 15:31:06 2025 -0700
+
+    Added Interrupts and Queues
+
+[33mcommit 49192ee685d23ea94d9ff2461a9cb7f45cf05b8f[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Mon Dec 15 14:17:00 2025 -0700
+
+    Reorganize UI and DSP code into separate modules
+
+[33mcommit 0c30d28a79a8b01450790f8164bead1d099c5043[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Mon Dec 15 14:12:45 2025 -0700
+
+    Reorganize UI and DSP code into separate modules
+
+[33mcommit 238f85ea47707bdd9a5d0962089ccec963265e26[m
+Author: Huzaifa <wyvern12312@gmail.com>
+Date:   Mon Dec 15 14:01:48 2025 -0700
+
+    Initial commit – HuzDSP firmware
