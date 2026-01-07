@@ -1,5 +1,7 @@
+"./Core/Src/DSP/DSP_IIR_HPF.o"
 "./Core/Src/DSP/DSP_IIR_LPF.o"
 "./Core/Src/DSP/DSP_Init.o"
+"./Core/Src/DSP/DSP_Shifter.o"
 "./Core/Src/UI/UI_Init.o"
 "./Core/Src/UI/UI_Update.o"
 "./Core/Src/freertos.o"

@@ -33,10 +33,12 @@ void DSP_IIR_LPF_SetCoeff(DSP_LPF *filter, float CutoffFreq, float SampleFreq){
 }
 
 // call in DSP pipeline
-void DSP_IIR_LPF_Update(DSP_LPF *filter, float input){
+float DSP_IIR_LPF_Update(DSP_LPF *filter, float input){
 	float a = filter -> cBi[0];
 	float b = filter -> cBi[1];
 
 	filter -> BiOut = a * (input + filter -> PrevIn) + b * filter -> BiOut;
 	filter -> PrevIn = input;
+
+	return filter -> BiOut;
 }

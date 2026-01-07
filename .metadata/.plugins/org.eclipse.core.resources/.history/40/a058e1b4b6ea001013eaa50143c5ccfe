@@ -1,0 +1,89 @@
+/*
+ * DSP_Shifter.c
+ *
+ *  Created on: Jan 5, 2026
+ *      Author: Huzaifa
+ */
+
+#include "DSP/DSP_Shifter.h"
+#include <math.h>
+#include <string.h>
+
+void DSP_Shifter_Init(DSP_Shifter *s, float semitones)
+{
+    memset(s, 0, sizeof(*s));
+
+    s->pitch_ratio = powf(2.0f, semitones / 12.0f);
+    s->synthHop = (uint16_t)(SHIFTER_HOP * s->pitch_ratio);
+
+    if (s->synthHop < 1)           s->synthHop = 1;
+    if (s->synthHop > SHIFTER_WIN) s->synthHop = SHIFTER_WIN;
+
+    for (int i = 0; i < SHIFTER_WIN; i++) {
+        s->window[i] = 0.5f - 0.5f *
+            cosf(2.0f * M_PI * i / (SHIFTER_WIN - 1));
+    }
+}
+
+float DSP_Shifter_Update(DSP_Shifter *s, float in)
+{
+    /* ---------- input buffer ---------- */
+    s->inBuf[s->inFill++] = in;
+
+    /* ---------- output read + normalization ---------- */
+    float out = 0.0f;
+    float norm = s->normBuf[s->outReadIdx];
+
+    if (norm > 1e-6f) {
+        out = s->outBuf[s->outReadIdx] / norm;
+    }
+
+    s->outBuf[s->outReadIdx]  = 0.0f;
+    s->normBuf[s->outReadIdx] = 0.0f;
+    s->outReadIdx = (s->outReadIdx + 1) % SHIFTER_OUTBUF;
+
+    s->hopCtr++;
+
+    /* ---------- process frame ---------- */
+    if (s->inFill >= SHIFTER_WIN && s->hopCtr >= SHIFTER_HOP) {
+        s->hopCtr = 0;
+
+        for (int i = 0; i < SHIFTER_WIN; i++) {
+            float readPos = i / s->pitch_ratio;
+            int idx = (int)readPos;
+            float frac = readPos - idx;
+
+            float sample = 0.0f;
+            if (idx + 1 < SHIFTER_WIN) {
+                sample =
+                    s->inBuf[idx] * (1.0f - frac) +
+                    s->inBuf[idx + 1] * frac;
+            }
+
+            uint16_t outIdx =
+                (s->outWriteIdx + i) % SHIFTER_OUTBUF;
+
+            float w = s->window[i];
+            s->outBuf[outIdx]  += sample * w;
+            s->normBuf[outIdx] += w * w;
+        }
+
+        /* ---------- shift input buffer ---------- */
+        memmove(
+            s->inBuf,
+            s->inBuf + SHIFTER_HOP,
+            (SHIFTER_WIN - SHIFTER_HOP) * sizeof(float)
+        );
+        s->inFill = SHIFTER_WIN - SHIFTER_HOP;
+
+        /* ---------- advance synthesis pointer ---------- */
+        s->outWriteIdx =
+            (s->outWriteIdx + s->synthHop) % SHIFTER_OUTBUF;
+    }
+
+    /* ---------- safety clamp ---------- */
+    if (out >  1.2f) out =  1.2f;
+    if (out < -1.2f) out = -1.2f;
+
+    return out;
+}

@@ -1,0 +1,30 @@
+/*
+ * DSP_Shifter.h
+ *
+ *  Created on: Jan 5, 2026
+ *      Author: Huzaifa
+ */
+
+#ifndef INC_DSP_DSP_SHIFTER_H_
+#define INC_DSP_DSP_SHIFTER_H_
+
+#include <stdint.h>
+#include <math.h>
+
+typedef struct {
+	uint16_t win_len;  // sample window length
+	uint16_t hop_len;  // distance between start of samples
+	float    semitones; // User inputted value for semitone scaling
+	float    pitch_ratio;
+	synthWin_len;
+	synthHop_len;
+	windowf; // Hanning function
+
+} DSP_Shifter;
+
+void DSP_Shifter_Init(DSP_Shifter *shifter);
+void DSP_Shifter_SetCoeff(DSP_Shifter *shifter, float CutoffFreq, float SampleFreq);
+void DSP_Shifter_Update(DSP_Shifter *shifter, float input);
+
+
+#endif /* INC_DSP_DSP_SHIFTER_H_ */

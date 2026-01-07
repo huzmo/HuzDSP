@@ -59,6 +59,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 HuzDSPV1.list \
 
+OBJCOPY_BIN += \
+HuzDSPV1.bin \
+
 
 # All Target
 all: main-build
@@ -82,12 +85,17 @@ HuzDSPV1.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+HuzDSPV1.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "HuzDSPV1.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) HuzDSPV1.elf HuzDSPV1.list HuzDSPV1.map default.size.stdout
+	-$(RM) HuzDSPV1.bin HuzDSPV1.elf HuzDSPV1.list HuzDSPV1.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

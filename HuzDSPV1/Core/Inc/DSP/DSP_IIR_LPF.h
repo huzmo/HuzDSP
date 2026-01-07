@@ -20,7 +20,7 @@ typedef struct {
 
 void DSP_IIR_LPF_Init(DSP_LPF *filter);
 void DSP_IIR_LPF_SetCoeff(DSP_LPF *filter, float CutoffFreq, float SampleFreq);
-void DSP_IIR_LPF_Update(DSP_LPF *filter, float input);
+float DSP_IIR_LPF_Update(DSP_LPF *filter, float input);
 
 
 #endif /* INC_DSP_DSP_IIR_LPF_H_ */

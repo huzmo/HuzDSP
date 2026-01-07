@@ -1,0 +1,28 @@
+/*
+ * DSP_Shifter.c
+ *
+ * Created on: Jan 5, 2026
+ * Author: Huzaifa
+ */
+
+#include "DSP/DSP_Shifter.h"
+#include <math.h>
+#include <string.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+void DSP_Shifter_Init(DSP_Shifter *s, float semitones)
+{
+	s->pWrite = 0;
+	s->pRead = 0.0f;
+	s->shift = 1.4f;
+	s->xfade = 1.0f;
+}
+
+float DSP_Shifter_Update(DSP_Shifter *s, float in)
+{
+	s->buf[s->pWrite] = in;
+
+}

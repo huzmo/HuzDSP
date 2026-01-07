@@ -8,8 +8,14 @@
 #include "DSP/DSP_Init.h"
 
 DSP_LPF LPF;
+DSP_Shifter gPitch;
+DSP_HPF hpf_300;
+
 
 void DSP_Init(void){
 	DSP_IIR_LPF_Init(&LPF);
+	DSP_IIR_LPF_SetCoeff(&LPF, 3000.0f, 48000.0f);
+	DSP_Shifter_Init(&gPitch, +3.0f); // test +3 semitone shift
+	DSP_HPF_Init(&hpf_300);
 }
 

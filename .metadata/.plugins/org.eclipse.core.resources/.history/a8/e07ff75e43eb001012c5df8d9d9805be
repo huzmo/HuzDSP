@@ -1,0 +1,47 @@
+/*
+ * DSP_Shifter.h
+ *
+ * Created on: Jan 5, 2026
+ * Author: Huzaifa
+ */
+
+#ifndef INC_DSP_DSP_SHIFTER_H_
+#define INC_DSP_DSP_SHIFTER_H_
+
+#pragma once
+#include <stdint.h>
+#include <math.h>
+
+#define BufSize         1000
+#define Overlap         2000
+
+typedef struct {
+
+    /* pitch control */
+    float pitch_ratio;
+
+    /* analysis / synthesis hops */
+    uint16_t analysisHop;
+    uint16_t synthHop;
+
+    /* input */
+    float inBuf[SHIFTER_WIN];
+    uint16_t inFill;
+    uint16_t hopCtr;
+
+    /* window */
+    float window[SHIFTER_WIN];
+
+    /* output ring buffer */
+    float outBuf[SHIFTER_OUTBUF];
+    float normBuf[SHIFTER_OUTBUF];
+    uint16_t outReadIdx;
+    uint16_t outWriteIdx;
+
+} DSP_Shifter;
+
+/* API */
+void  DSP_Shifter_Init(DSP_Shifter *s, float semitones);
+float DSP_Shifter_Update(DSP_Shifter *s, float in);
+
+#endif /* INC_DSP_DSP_SHIFTER_H_ */

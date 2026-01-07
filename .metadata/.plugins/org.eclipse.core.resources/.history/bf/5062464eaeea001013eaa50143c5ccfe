@@ -1,0 +1,68 @@
+/*
+ * DSP_Shifter.c
+ *
+ *  Created on: Jan 5, 2026
+ *      Author: Huzaifa
+ */
+
+
+#include "DSP/DSP_Shifter.h"
+// Custom shifter implementaion using OLA, change to phase vocoder algorithm later for better quality
+
+// call on startup/setting change
+void DSP_Shifter_Init(DSP_Shifter *shifter, float semitones){
+	shifter -> win_len = 256; // 1/48000 * 5000 = 104.1667ms
+	shifter -> hop_len = 64; // 1/48000 * 2500 = 52.08333ms
+
+	shifter -> pitch_ratio = powf(2.0f, semitones / 12.0f);
+
+	shifter -> synthWin_len = shifter -> win_len;
+	shifter -> synthHop_len = (int)(shifter -> hop_len * shifter -> pitch_ratio);;
+	shifter -> windowf = 0;
+
+	shifter -> inIdx = 0;
+	shifter -> outIdx = 0;
+	shifter -> hopCtr = 0;
+
+    for (int i = 0; i < shifter -> win_len; i++)
+    {
+    	shifter -> window[i] = 0.5f - 0.5f * cosf(2.0f * M_PI * i / (shifter -> win_len - 1));
+    	shifter -> inBuf[i] = 0.0f;
+    }
+
+    for (int i = 0; i < 512; i++) shifter -> outBuf[i] = 0.0f;
+}
+
+// call in DSP pipeline
+void DSP_Shifter_Update(DSP_Shifter *shifter, float input){
+    /* Write incoming sample */
+    shifter -> inBuf[shifter->inPos++] = input;
+
+    float output = shifter -> outBuf[shifter -> outIdx];
+    shifter -> outBuf[shifter -> outIdx] = 0.0f;
+    shifter -> outPos = (shifter -> outIdx + 1) % 512;
+
+    shifter->hopCounter++;
+
+    /* When enough samples collected */
+    if (shifter->hopCounter >= shifter->Ha)
+    {
+        shifter->hopCounter = 0;
+
+        /* Overlap-add windowed block */
+        for (int i = 0; i < shifter->N; i++)
+        {
+            int outIndex = (shifter->outPos + i) % 512;
+            shifter->outBuf[outIndex] += shifter->inBuf[i] * shifter->window[i];
+        }
+
+        /* Shift input buffer left */
+        memmove(shifter->inBuf, shifter->inBuf + shifter->Ha, (shifter->N - shifter->Ha) * sizeof(float));
+        shifter->inPos = shifter->N - shifter->Ha;
+
+        /* Advance output position by synthesis hop */
+        shifter->outPos = (shifter->outPos + shifter->Hs) % 512;
+    }
+
+    return output;
+}

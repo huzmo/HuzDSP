@@ -1,0 +1,42 @@
+/*
+ * DSP_Shifter.h
+ *
+ *  Created on: Jan 5, 2026
+ *      Author: Huzaifa
+ */
+
+#ifndef INC_DSP_DSP_SHIFTER_H_
+#define INC_DSP_DSP_SHIFTER_H_
+
+#pragma once
+#include <stdint.h>
+#include <math.h>
+#include <string.h>
+
+#define SHIFTER_WIN 256
+#define SHIFTER_HOP 64
+#define SHIFTER_OUTBUF 1024
+
+typedef struct {
+    float pitch_ratio;
+
+    float inBuf[SHIFTER_WIN];
+    float window[SHIFTER_WIN];
+
+    float outBuf[SHIFTER_OUTBUF];
+    float normBuf[SHIFTER_OUTBUF];
+
+    uint16_t inFill;
+    uint16_t hopCtr;
+
+    uint16_t outReadIdx;
+    uint16_t outWriteIdx;
+
+    uint16_t synthHop;
+} DSP_Shifter;
+
+
+void DSP_Shifter_Init(DSP_Shifter *s, float semitones);
+float DSP_Shifter_Update(DSP_Shifter *s, float in);
+
+#endif /* INC_DSP_DSP_SHIFTER_H_ */

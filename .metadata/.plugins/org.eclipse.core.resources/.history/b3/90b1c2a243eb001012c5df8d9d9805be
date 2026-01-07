@@ -1,0 +1,99 @@
+/*
+ * DSP_Shifter.c
+ *
+ * Created on: Jan 5, 2026
+ * Author: Huzaifa
+ */
+
+#include "DSP/DSP_Shifter.h"
+#include <math.h>
+#include <string.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+void DSP_Shifter_Init(DSP_Shifter *s, float semitones)
+{
+    memset(s, 0, sizeof(*s));
+
+    s->pitch_ratio = powf(2.0f, semitones / 12.0f);
+
+    s->analysisHop = SHIFTER_HOP;
+    s->synthHop    = (uint16_t)(SHIFTER_HOP * s->pitch_ratio);
+    if (s->synthHop < 1) s->synthHop = 1;
+
+    /* Hann window */
+    for (int i = 0; i < SHIFTER_WIN; i++) {
+        s->window[i] =
+            0.5f - 0.5f * cosf(2.0f * M_PI * i / (SHIFTER_WIN - 1));
+    }
+}
+
+float DSP_Shifter_Update(DSP_Shifter *s, float in)
+{
+    /* ---------- input buffer ---------- */
+    if (s->inFill < SHIFTER_WIN) {
+        s->inBuf[s->inFill++] = in;
+    }
+
+    /* ---------- output read ---------- */
+    float out = 0.0f;
+    float norm = s->normBuf[s->outReadIdx];
+
+    if (norm > 1e-6f) {
+        out = s->outBuf[s->outReadIdx] / norm;
+    }
+
+    s->outBuf[s->outReadIdx]  = 0.0f;
+    s->normBuf[s->outReadIdx] = 0.0f;
+    s->outReadIdx = (s->outReadIdx + 1) % SHIFTER_OUTBUF;
+
+    s->hopCtr++;
+
+    /* ---------- process frame ---------- */
+    if (s->inFill == SHIFTER_WIN && s->hopCtr >= s->analysisHop) {
+        s->hopCtr = 0;
+
+        for (int i = 0; i < SHIFTER_WIN; i++) {
+
+            /* time-scaled read */
+            float readPos = i / s->pitch_ratio;
+
+            if (readPos < 0.0f || readPos >= SHIFTER_WIN - 1)
+                continue;
+
+            int idx = (int)readPos;
+            float frac = readPos - idx;
+
+            float sample =
+                s->inBuf[idx] * (1.0f - frac) +
+                s->inBuf[idx + 1] * frac;
+
+            uint16_t outIdx =
+                (s->outWriteIdx + i) % SHIFTER_OUTBUF;
+
+            float w = s->window[i];
+            s->outBuf[outIdx]  += sample * w;
+            s->normBuf[outIdx] += w;
+        }
+
+        /* ---------- shift input buffer ---------- */
+        memmove(
+            s->inBuf,
+            s->inBuf + s->analysisHop,
+            (SHIFTER_WIN - s->analysisHop) * sizeof(float)
+        );
+        s->inFill = SHIFTER_WIN - s->analysisHop;
+
+        /* ---------- advance synthesis pointer ---------- */
+        s->outWriteIdx =
+            (s->outWriteIdx + s->synthHop) % SHIFTER_OUTBUF;
+    }
+
+    /* ---------- soft safety ---------- */
+    if (out >  1.2f) out =  1.2f;
+    if (out < -1.2f) out = -1.2f;
+
+    return out;
+}

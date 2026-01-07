@@ -1,0 +1,53 @@
+/*
+ * DSP_IIR_HPF.c
+ *
+ *  Created on: Jan 6, 2026
+ *      Author: Huzaifa
+ */
+
+
+#include "DSP/DSP_IIR_HPF.h"
+
+/* Initialize filter */
+void DSP_HPF_Init(DSP_Biquad *f)
+{
+    /* Coefficients from your code */
+    f->a[0] = 0.9459064615860119f;
+    f->a[1] = -1.9444021537341245f;
+    f->a[2] = 1.0f;
+
+    f->b[0] = 1.0f;
+    f->b[1] = -2.0f;
+    f->b[2] = 1.0f;
+
+    f->gain = 1.0281960624532192f;
+
+    for (int i = 0; i < 3; i++) {
+        f->x[i] = 0.0f;
+        f->y[i] = 0.0f;
+    }
+}
+
+/* Process one sample */
+float DSP_HPF_Update(DSP_Biquad *f, float in)
+{
+    /* Shift input history */
+    f->x[0] = f->x[1];
+    f->x[1] = f->x[2];
+    f->x[2] = in / f->gain;
+
+    /* Shift output history */
+    f->y[0] = f->y[1];
+    f->y[1] = f->y[2];
+
+    /* Difference equation */
+    float out =
+          f->b[0] * f->x[2]
+        + f->b[1] * f->x[1]
+        + f->b[2] * f->x[0]
+        - f->a[0] * f->y[1]
+        - f->a[1] * f->y[0];
+
+    f->y[2] = out;
+    return out;
+}

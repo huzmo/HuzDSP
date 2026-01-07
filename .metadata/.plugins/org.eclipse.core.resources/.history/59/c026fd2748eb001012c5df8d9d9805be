@@ -1,0 +1,71 @@
+/*
+ * DSP_Shifter.c
+ *
+ * Created on: Jan 5, 2026
+ * Author: Huzaifa
+ */
+
+#include "DSP/DSP_Shifter.h"
+#include <math.h>
+#include <string.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+void DSP_Shifter_Init(DSP_Shifter *s, float semitones)
+{
+    s->pWrite = 0;
+    s->pRead  = 0.0f;
+    s->xfade  = 0.0f;
+
+    s->shift = 1.3;//powf(2.0f, semitones / 12.0f);
+
+    for (int i = 0; i < BufSize; i++)
+        s->aBuff[i] = 0.0f;
+}
+
+
+float DSP_Shifter_Update(DSP_Shifter *s, float in)
+{
+    /* Write incoming sample */
+    s->aBuff[s->pWrite] = in;
+
+    /* Integer read pointer */
+    int rd0 = (int)roundf(s->pRead);
+
+    /* 180° read pointer */
+    int rd1 = rd0 + (BufSize >> 1);
+    if (rd1 >= BufSize) rd1 -= BufSize;
+
+    float y0 = s->aBuff[rd0];
+    float y1 = s->aBuff[rd1];
+
+    /* Crossfade logic */
+    int dist0 = s->pWrite - rd0;
+    if (dist0 < 0) dist0 += BufSize;
+
+    int dist1 = s->pWrite - rd1;
+    if (dist1 < 0) dist1 += BufSize;
+
+    if (dist0 < Overlap && s->shift != 1.0f)
+        s->xfade = (float)dist0 / (float)Overlap;
+    else if (dist1 < Overlap && s->shift != 1.0f)
+        s->xfade = 1.0f - ((float)dist1 / (float)Overlap);
+
+    /* Mix */
+    float out = y0 * s->xfade + y1 * (1.0f - s->xfade);
+
+    /* Advance pointers */
+    s->pRead += s->shift;
+    s->pWrite++;
+
+    if (s->pWrite >= BufSize)
+        s->pWrite = 0;
+
+    if ((int)s->pRead >= BufSize)
+        s->pRead -= BufSize;
+
+    return out;
+}
+

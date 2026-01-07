@@ -1,0 +1,31 @@
+/*
+ * DSP_Shifter.c
+ *
+ *  Created on: Jan 5, 2026
+ *      Author: Huzaifa
+ */
+
+
+#include "DSP/DSP_Shifter.h"
+// Custom shifter implementaion using OLA, change to phase vocoder algorithm later for better quality
+
+// call on startup
+void DSP_Shifter_Init(DSP_Shifter *shifter, float semitones){
+	shifter -> win_len = 5000; // 1/48000 * 5000 = 104.1667ms
+	shifter -> hop_len = 2500; // 1/48000 * 2500 = 52.08333ms
+
+	shifter -> pitch_ratio = powf(2.0f, semitones / 12.0f);
+
+	shifter -> synthWin_len = win_len;
+	shifter -> synthHop_len = hop_len;
+	shifter -> windowf = 0;
+}
+
+// call in DSP pipeline
+void DSP_Shifter_Update(DSP_Shifter *shifter, float input){
+	float a = filter -> cBi[0];
+	float b = filter -> cBi[1];
+
+	filter -> BiOut = a * (input + filter -> PrevIn) + b * filter -> BiOut;
+	filter -> PrevIn = input;
+}

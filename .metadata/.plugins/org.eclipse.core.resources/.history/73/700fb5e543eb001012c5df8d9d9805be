@@ -1,0 +1,30 @@
+/*
+ * DSP_Shifter.h
+ *
+ * Created on: Jan 5, 2026
+ * Author: Huzaifa
+ */
+
+#ifndef INC_DSP_DSP_SHIFTER_H_
+#define INC_DSP_DSP_SHIFTER_H_
+
+#pragma once
+#include <stdint.h>
+#include <math.h>
+
+#define BufSize         1000
+#define Overlap         2000
+
+typedef struct {
+	int Buf[BufSize];
+	int pWrite;
+	float pRead;
+	float shift;
+	float xfade;
+} DSP_Shifter;
+
+/* API */
+void  DSP_Shifter_Init(DSP_Shifter *s, float semitones);
+float DSP_Shifter_Update(DSP_Shifter *s, float in);
+
+#endif /* INC_DSP_DSP_SHIFTER_H_ */
