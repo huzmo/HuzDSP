@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/user-attachments/assets/0a6ceb56-c027-44e3-8f69-a59b757a234c" alt="Logo" width="1200" height="1200">
   </a>
 
   <h3 align="center">HUZDSP</h3>
@@ -109,7 +109,7 @@ To aid signal integrity, analog, power, and digital circuitry are separated from
 
 ### Audio Processing Pipeline
 
-*(Audio processing pipeline block diagram, to be added)*
+<img src="https://github.com/user-attachments/assets/66542a6e-b00b-4026-8fc8-ac417c9639bb" alt="Logo">
 
 ### Effect Framework
 
@@ -149,7 +149,7 @@ Memory is partitioned into two logical regions. Uncached allocations begin at `0
 
 ### Memory Usage
 
-*[TODO: insert flash/RAM utilization figures]*
+<img src="https://github.com/user-attachments/assets/c63306cb-fc72-4627-9351-128a2a6ed32d" alt="Logo">
 
 ### Audio Quality
 
