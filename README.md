@@ -73,6 +73,7 @@ The goal of this project was to build a complete, professional-grade embedded au
 Fundamentally, the signal flows through a linear path: beginning as an analog input from an external source, the signal passes through a buffer stage and is filtered with a cutoff at 27.6KHz to eliminate frequencies above the audible band. The filtered signal is then digitized by the ADC stage of the codec, after which the MCU reads and processes the data in real time before it is finally output and filtered back to analog on the way out.
 
 <img width="546" height="440" alt="Image" src="https://github.com/user-attachments/assets/f1bbb0e0-f356-4f6b-a928-fd08da7682c9" />
+
 ### Inputs / Outputs
 
 - 2x mono instrument inputs
