@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://github.com/user-attachments/assets/0a6ceb56-c027-44e3-8f69-a59b757a234c" alt="Logo" width="1200" height="1200">
+    <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/67f2a02d-496e-4548-9816-091abdea8398" />
   </a>
 
   <h3 align="center">HUZDSP</h3>
@@ -38,8 +38,7 @@
   - [Memory Map](#memory-map)
   - [Drivers / Peripherals](#drivers--peripherals)
 - [Performance](#performance)
-  - [Latency](#latency)
-  - [CPU / DSP Utilization](#cpu--dsp-utilization)
+  - [CPU Utilization](#cpu-utilization)
   - [Memory Usage](#memory-usage)
   - [Audio Quality](#audio-quality)
 - [Challenges](#challenges)
@@ -55,7 +54,7 @@
 
 ## Overview
 
-HuzDSP is a digital multi-effects guitar pedal, whichmpairs an STM32H743 microcontroller, a CS4270 audio codec, and an ILI9488 TFT display, running on FreeRTOS with an LVGL-based UI for real-time parameter control and effect chaining.
+HuzDSP is a digital multi-effects guitar pedal, which pairs an STM32H743 microcontroller, a CS4270 audio codec, and an ILI9488 TFT display, running on FreeRTOS with an LVGL-based UI for real-time parameter control and effect chaining.
 
 The goal of this project was to build a complete, professional-grade embedded audio platform rather than a single fixed-function pedal, with a 24-bit/48kHz signal path and a modular effects architecture that supports chaining multiple effects together, configuring them through UI, and extending the effect library without touching the core audio engine. Effects implemented so far include [effects list.
 
@@ -71,8 +70,9 @@ The goal of this project was to build a complete, professional-grade embedded au
 
 ### Audio Signal Chain
 
-Fundamentally, the signal flows through a linear path: beginning as an analog input from an external source, the signal passes through a buffer stage and is filtered with a cutoff at *[TODO: insert cutoff frequency]* to eliminate frequencies above the audible band. The filtered signal is then digitized by the ADC stage of the codec, after which the MCU reads and processes the data in real time before it is finally output and filtered back to analog on the way out.
+Fundamentally, the signal flows through a linear path: beginning as an analog input from an external source, the signal passes through a buffer stage and is filtered with a cutoff at 27.6KHz to eliminate frequencies above the audible band. The filtered signal is then digitized by the ADC stage of the codec, after which the MCU reads and processes the data in real time before it is finally output and filtered back to analog on the way out.
 
+<img width="546" height="440" alt="Image" src="https://github.com/user-attachments/assets/f1bbb0e0-f356-4f6b-a928-fd08da7682c9" />
 ### Inputs / Outputs
 
 - 2x mono instrument inputs
@@ -82,6 +82,7 @@ Fundamentally, the signal flows through a linear path: beginning as an analog in
 - 1x master volume potentiometer
 - 480x320 LCD
 - USB-C connector, reserved for future audio input/output to enable full audio interface functionality
+- DC barrel jack for 9V-12V supply
 
 ### Power
 
@@ -139,13 +140,9 @@ Memory is partitioned into two logical regions. Uncached allocations begin at `0
 
 ## Performance
 
-### Latency
+### CPU Utilization
 
-*[TODO: insert measured round-trip latency]*
-
-### CPU / DSP Utilization
-
-*[TODO: insert CPU/DSP load figures]*
+<img src="https://github.com/user-attachments/assets/c029e5fc-9e3e-46be-9b22-a2a37ed343e8" alt="Logo">
 
 ### Memory Usage
 
@@ -193,8 +190,6 @@ Designing the effect framework so new effects could be added without modifying t
 ---
 
 ## Media
-
-*(Photos, demo video, and/or GIFs of the pedal in action, to be added)*
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
