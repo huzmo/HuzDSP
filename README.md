@@ -151,7 +151,9 @@ Memory is partitioned into two logical regions. Uncached allocations begin at `0
 
 ### Audio Quality
 
-*[TODO: insert THD/SNR or other audio quality measurements]*
+<img width="2880" height="2160" alt="Image" src="https://github.com/user-attachments/assets/15c5f384-be7d-4853-8d67-b52a303ddbe5" />
+
+0.12ms measured latency with slight distortion caused by the aforementioned sources.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -191,6 +193,10 @@ Designing the effect framework so new effects could be added without modifying t
 ---
 
 ## Media
+
+<img width="2880" height="2160" alt="Image" src="https://github.com/user-attachments/assets/e39ecf65-4021-43b8-938c-948584b63642" />
+
+Test Rig
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
