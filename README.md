@@ -8,7 +8,7 @@
   <h3 align="center">HUZDSP</h3>
 
   <p align="center">
-    Digital multi-effects guitar pedal featuring 2 input channels, 48kHz sampling, and 24-bit audio and open-source software.
+    Digital multi-effects guitar pedal featuring 2 input channels, 48kHz sampling, and 24-bit audio and open-source software with over 720 unique effect combinations per channel.
     <br />
     <br />
     &middot;
