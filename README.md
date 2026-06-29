@@ -26,13 +26,11 @@
 
 - [Overview](#overview)
 - [Hardware](#hardware)
-  - [System Architecture](#system-architecture)
   - [Audio Signal Chain](#audio-signal-chain)
   - [Inputs / Outputs](#inputs--outputs)
   - [Power](#power)
   - [PCB / Physical Design](#pcb--physical-design)
 - [Firmware](#firmware)
-  - [Architecture](#architecture)
   - [Audio Processing Pipeline](#audio-processing-pipeline)
   - [Effect Framework](#effect-framework)
   - [Memory Map](#memory-map)
@@ -63,10 +61,6 @@ The goal of this project was to build a complete, professional-grade embedded au
 ---
 
 ## Hardware
-
-### System Architecture
-
-*(System architecture block diagram, to be added)*
 
 ### Audio Signal Chain
 
@@ -104,10 +98,6 @@ To aid signal integrity, analog, power, and digital circuitry are separated from
 ---
 
 ## Firmware
-
-### Architecture
-
-*(Firmware block diagram, to be added)*
 
 ### Audio Processing Pipeline
 
@@ -187,7 +177,8 @@ Designing the effect framework so new effects could be added without modifying t
 - Bring up USB-C audio interface functionality for full audio interface mode
 - Expand the effect library beyond the current selection
 - Continued UI refinement
-
+- Implement EQ
+  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
