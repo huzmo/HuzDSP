@@ -12,7 +12,7 @@
     <br />
     <br />
     &middot;
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://youtube.com/shorts/TF-euVBcPBo?si=U8Q8GrKw2UyFqoOQ">View Demo</a>
     &middot;
   </p>
 </div>
