@@ -46,7 +46,6 @@
   - [Modular Effect Integration](#modular-effect-integration)
 - [Future Improvements](#future-improvements)
 - [Media](#media)
-- [License](#license)
 
 ---
 
@@ -190,9 +189,3 @@ Test Rig
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
-
-## License
-
-*License not yet decided, to be added.*
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
